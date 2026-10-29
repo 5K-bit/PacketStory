@@ -1,0 +1,4 @@
+synthetic capture: 180000 packets, 51.8 MiB, 20000 conversations; one machine, one run
+analysis: 3.1 s (58,402 packets/s)
+report: 0.00 s
+peak memory of the whole process (including building the capture): 226 MiB

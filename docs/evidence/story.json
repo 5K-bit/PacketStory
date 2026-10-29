@@ -1,0 +1,186 @@
+{
+  "capture": {
+    "first_ts_ns": 1793293200000000000,
+    "format": "pcap",
+    "fragments": 0,
+    "last_ts_ns": 1793293214744000000,
+    "malformed": 0,
+    "name": "lab.pcap",
+    "packets": 95,
+    "unsupported": {},
+    "warnings": []
+  },
+  "events": [
+    {
+      "first_packet": 1,
+      "kind": "icmp",
+      "last_packet": 2,
+      "notable": false,
+      "text": "192.0.2.10 pinged 192.0.2.1: 1 request(s), 1 reply(ies).",
+      "ts": "2026-10-29T17:00:00.000Z"
+    },
+    {
+      "first_packet": 3,
+      "kind": "dns",
+      "last_packet": 4,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for example.test (A) and got 203.0.113.7.",
+      "ts": "2026-10-29T17:00:00.501Z"
+    },
+    {
+      "first_packet": 5,
+      "kind": "tcp",
+      "last_packet": 13,
+      "notable": false,
+      "text": "192.0.2.10 connected to example.test (203.0.113.7) port 443/tcp (https), TLS to example.test; 376 B sent, 5.1 KiB received over 8 ms; closed normally.",
+      "ts": "2026-10-29T17:00:00.522Z"
+    },
+    {
+      "first_packet": 14,
+      "kind": "dns",
+      "last_packet": 15,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for api.example.test (A) and got 203.0.113.20.",
+      "ts": "2026-10-29T17:00:01.531Z"
+    },
+    {
+      "first_packet": 16,
+      "kind": "cleartext-auth",
+      "last_packet": 22,
+      "notable": true,
+      "text": "192.0.2.10 sent an HTTP request to api.example.test with an Authorization header (Basic) over an unencrypted connection. The value is not shown here.",
+      "ts": "2026-10-29T17:00:01.552Z"
+    },
+    {
+      "first_packet": 16,
+      "kind": "tcp",
+      "last_packet": 22,
+      "notable": false,
+      "text": "192.0.2.10 connected to api.example.test (203.0.113.20) port 80/tcp (http), GET api.example.test/v1/status \u2192 200; 114 B sent, 54 B received over 6 ms; closed normally.",
+      "ts": "2026-10-29T17:00:01.552Z"
+    },
+    {
+      "first_packet": 23,
+      "kind": "dns",
+      "last_packet": 24,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for xk3f9a.invalid (A) and got NXDOMAIN (no such name).",
+      "ts": "2026-10-29T17:00:03.559Z"
+    },
+    {
+      "first_packet": 23,
+      "kind": "dns-failures",
+      "last_packet": 34,
+      "notable": true,
+      "text": "192.0.2.10 had 6 different names fail to resolve (for example b2k8yy.invalid, m7d4tt.invalid, q8w2pz.invalid). Misconfiguration and malware both cause this; the capture alone cannot say which.",
+      "ts": "2026-10-29T17:00:03.559Z"
+    },
+    {
+      "first_packet": 25,
+      "kind": "dns",
+      "last_packet": 26,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for q8w2pz.invalid (A) and got NXDOMAIN (no such name).",
+      "ts": "2026-10-29T17:00:03.580Z"
+    },
+    {
+      "first_packet": 27,
+      "kind": "dns",
+      "last_packet": 28,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for m7d4tt.invalid (A) and got NXDOMAIN (no such name).",
+      "ts": "2026-10-29T17:00:03.601Z"
+    },
+    {
+      "first_packet": 29,
+      "kind": "dns",
+      "last_packet": 30,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for zz91ab.invalid (A) and got NXDOMAIN (no such name).",
+      "ts": "2026-10-29T17:00:03.622Z"
+    },
+    {
+      "first_packet": 31,
+      "kind": "dns",
+      "last_packet": 32,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for r5n0cc.invalid (A) and got NXDOMAIN (no such name).",
+      "ts": "2026-10-29T17:00:03.643Z"
+    },
+    {
+      "first_packet": 33,
+      "kind": "dns",
+      "last_packet": 34,
+      "notable": false,
+      "text": "192.0.2.10 asked 192.0.2.53 for b2k8yy.invalid (A) and got NXDOMAIN (no such name).",
+      "ts": "2026-10-29T17:00:03.664Z"
+    },
+    {
+      "first_packet": 35,
+      "kind": "udp",
+      "last_packet": 35,
+      "notable": false,
+      "text": "192.0.2.10 sent 1 UDP packet(s) (48 B) to 198.51.100.123 port 123/udp (ntp), with no reply seen.",
+      "ts": "2026-10-29T17:00:03.685Z"
+    },
+    {
+      "first_packet": 36,
+      "kind": "scan",
+      "last_packet": 87,
+      "notable": true,
+      "text": "Possible port scan: 198.51.100.77 tried 30 ports on 1 host(s) within 51 ms; 28 got no answer or were refused. Ports that answered: 22, 25. (A heuristic: it looks like a scan, it does not prove intent.)",
+      "ts": "2026-10-29T17:00:09.685Z"
+    },
+    {
+      "first_packet": 88,
+      "kind": "tcp-refused",
+      "last_packet": 89,
+      "notable": false,
+      "text": "192.0.2.10 made 1 connection attempt to 192.0.2.50 on port 23 (telnet); each was refused (the host answered with a reset).",
+      "ts": "2026-10-29T17:00:12.737Z"
+    },
+    {
+      "first_packet": 90,
+      "kind": "tcp",
+      "last_packet": 95,
+      "notable": false,
+      "text": "192.0.2.10 connected to 192.0.2.50 port 22/tcp (ssh); 61 B sent, 101 B received over 5 ms; reset by the server.",
+      "ts": "2026-10-29T17:00:14.739Z"
+    }
+  ],
+  "hosts": {
+    "192.0.2.1": {
+      "bytes": 42,
+      "packets": 1
+    },
+    "192.0.2.10": {
+      "bytes": 1977,
+      "packets": 23
+    },
+    "192.0.2.50": {
+      "bytes": 1397,
+      "packets": 24
+    },
+    "192.0.2.53": {
+      "bytes": 624,
+      "packets": 8
+    },
+    "198.51.100.77": {
+      "bytes": 1728,
+      "packets": 32
+    },
+    "203.0.113.20": {
+      "bytes": 216,
+      "packets": 3
+    },
+    "203.0.113.7": {
+      "bytes": 5422,
+      "packets": 4
+    }
+  },
+  "names": {
+    "203.0.113.20": "api.example.test",
+    "203.0.113.7": "example.test"
+  },
+  "tool": "packetstory 0.1.0"
+}

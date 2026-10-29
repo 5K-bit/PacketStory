@@ -1,0 +1,92 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.2.0, pluggy-1.7.0 -- /tmp/rpv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/claude/packetstory
+configfile: pyproject.toml
+testpaths: tests
+plugins: cov-7.1.0
+collecting ... collected 63 items
+
+tests/integration/test_cli_acceptance.py::test_summary_flows_story PASSED [  1%]
+tests/integration/test_cli_acceptance.py::test_story_to_files PASSED     [  3%]
+tests/integration/test_cli_acceptance.py::test_errors_exit_1 PASSED      [  4%]
+tests/integration/test_cli_acceptance.py::test_strict_flags_a_damaged_capture PASSED [  6%]
+tests/integration/test_cli_acceptance.py::test_pcapng_gives_the_same_story PASSED [  7%]
+tests/integration/test_cli_acceptance.py::test_version PASSED            [  9%]
+tests/integration/test_cli_acceptance.py::test_checked_in_capture_matches_the_builder PASSED [ 11%]
+tests/integration/test_cli_acceptance.py::test_transcript_and_reports_match_the_recorded_evidence PASSED [ 12%]
+tests/unit/test_capture.py::test_pcap_microseconds[False] PASSED         [ 14%]
+tests/unit/test_capture.py::test_pcap_microseconds[True] PASSED          [ 15%]
+tests/unit/test_capture.py::test_pcap_nanoseconds[False] PASSED          [ 17%]
+tests/unit/test_capture.py::test_pcap_nanoseconds[True] PASSED           [ 19%]
+tests/unit/test_capture.py::test_pcapng[6-False] PASSED                  [ 20%]
+tests/unit/test_capture.py::test_pcapng[6-True] PASSED                   [ 22%]
+tests/unit/test_capture.py::test_pcapng[9-False] PASSED                  [ 23%]
+tests/unit/test_capture.py::test_pcapng[9-True] PASSED                   [ 25%]
+tests/unit/test_capture.py::test_pcapng_simple_packet_block_and_unknown_blocks PASSED [ 26%]
+tests/unit/test_capture.py::test_truncated_pcap_keeps_what_it_can PASSED [ 28%]
+tests/unit/test_capture.py::test_implausible_length_stops_the_read PASSED [ 30%]
+tests/unit/test_capture.py::test_pcapng_bad_blocks_stop_the_read PASSED  [ 31%]
+tests/unit/test_capture.py::test_pcapng_packet_for_missing_interface_is_skipped PASSED [ 33%]
+tests/unit/test_capture.py::test_not_a_capture[-not a pcap] PASSED       [ 34%]
+tests/unit/test_capture.py::test_not_a_capture[hello world, not a capture-not a pcap] PASSED [ 36%]
+tests/unit/test_capture.py::test_not_a_capture[\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00-gzip] PASSED [ 38%]
+tests/unit/test_capture.py::test_not_a_capture[\xd4\xc3\xb2\xa1\x02\x00-shorter than its header] PASSED [ 39%]
+tests/unit/test_capture.py::test_size_cap PASSED                         [ 41%]
+tests/unit/test_decode_appproto.py::test_ethernet_ipv4_tcp PASSED        [ 42%]
+tests/unit/test_decode_appproto.py::test_vlan_tag_is_skipped PASSED      [ 44%]
+tests/unit/test_decode_appproto.py::test_ipv6_with_extension_header_and_icmpv6 PASSED [ 46%]
+tests/unit/test_decode_appproto.py::test_ipv6_fragment_is_flagged PASSED [ 47%]
+tests/unit/test_decode_appproto.py::test_ipv4_fragments PASSED           [ 49%]
+tests/unit/test_decode_appproto.py::test_arp_sll_raw_and_null_links PASSED [ 50%]
+tests/unit/test_decode_appproto.py::test_unsupported_and_malformed_are_reported_not_raised PASSED [ 52%]
+tests/unit/test_decode_appproto.py::test_udp_length_field_is_bounded PASSED [ 53%]
+tests/unit/test_decode_appproto.py::test_dns_query_and_response PASSED   [ 55%]
+tests/unit/test_decode_appproto.py::test_dns_rejects_hostile_messages PASSED [ 57%]
+tests/unit/test_decode_appproto.py::test_http_request_never_keeps_the_credential PASSED [ 58%]
+tests/unit/test_decode_appproto.py::test_tls_sni PASSED                  [ 60%]
+tests/unit/test_flows_story.py::test_handshake_states PASSED             [ 61%]
+tests/unit/test_flows_story.py::test_client_is_whoever_sent_the_syn_even_if_the_synack_came_first PASSED [ 63%]
+tests/unit/test_flows_story.py::test_midstream_capture PASSED            [ 65%]
+tests/unit/test_flows_story.py::test_port_reuse_after_close_starts_a_new_flow PASSED [ 66%]
+tests/unit/test_flows_story.py::test_dns_answers_name_the_hosts PASSED   [ 68%]
+tests/unit/test_flows_story.py::test_dns_query_without_reply_and_pairing_by_id PASSED [ 69%]
+tests/unit/test_flows_story.py::test_scan_threshold[9-False] PASSED      [ 71%]
+tests/unit/test_flows_story.py::test_scan_threshold[10-True] PASSED      [ 73%]
+tests/unit/test_flows_story.py::test_many_successful_connections_are_not_a_scan PASSED [ 74%]
+tests/unit/test_flows_story.py::test_nxdomain_threshold PASSED           [ 76%]
+tests/unit/test_flows_story.py::test_cleartext_credentials_are_flagged_but_never_printed PASSED [ 77%]
+tests/unit/test_flows_story.py::test_tls_is_not_mistaken_for_http PASSED [ 79%]
+tests/unit/test_flows_story.py::test_icmp_and_udp_narration PASSED       [ 80%]
+tests/unit/test_flows_story.py::test_events_are_sorted_and_cite_real_packets PASSED [ 82%]
+tests/unit/test_flows_story.py::test_lab_findings PASSED                 [ 84%]
+tests/unit/test_flows_story.py::test_empty_capture PASSED                [ 85%]
+tests/unit/test_flows_story.py::test_formatting_helpers PASSED           [ 87%]
+tests/unit/test_render_fuzz.py::test_markdown_golden PASSED              [ 88%]
+tests/unit/test_render_fuzz.py::test_json_golden_and_shape PASSED        [ 90%]
+tests/unit/test_render_fuzz.py::test_html_golden PASSED                  [ 92%]
+tests/unit/test_render_fuzz.py::test_hostile_text_is_neutralised_in_every_format PASSED [ 93%]
+tests/unit/test_render_fuzz.py::test_max_events_truncates_with_a_note PASSED [ 95%]
+tests/unit/test_render_fuzz.py::test_quality_section_reports_damage PASSED [ 96%]
+tests/unit/test_render_fuzz.py::test_event_free_capture_says_so PASSED   [ 98%]
+tests/unit/test_render_fuzz.py::test_mutated_captures_never_crash PASSED [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.18-final-0 _______________
+
+Name                          Stmts   Miss Branch BrPart  Cover   Missing
+-------------------------------------------------------------------------
+src/packetstory/__init__.py       1      0      0      0   100%
+src/packetstory/__main__.py       3      3      0      0     0%   1-5
+src/packetstory/analyze.py       18      0      0      0   100%
+src/packetstory/appproto.py     138      6     60      4    93%   50, 97-101, 102->104, 135->146
+src/packetstory/capture.py      129      7     54      7    92%   87-88, 98, 105->116, 111->115, 113->115, 136-137, 157-158
+src/packetstory/cli.py           85      6     18      3    91%   50, 53-54, 65-66, 99, 117->exit
+src/packetstory/decode.py       139      9     56      8    91%   47-48, 71, 77, 99, 127, 134->145, 146, 166, 172
+src/packetstory/errors.py         2      0      0      0   100%
+src/packetstory/flows.py        151      3     56      4    97%   98, 100-101, 102->82, 149->148
+src/packetstory/render.py        84      3     24      1    96%   24-25, 52
+src/packetstory/story.py        179      3     68      2    98%   219-220, 246
+-------------------------------------------------------------------------
+TOTAL                           929     40    336     29    94%
+============================== 63 passed in 2.43s ==============================
