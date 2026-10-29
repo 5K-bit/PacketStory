@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 240" role="img" aria-labelledby="t d">
+  <title id="t">PacketStory</title>
+  <desc id="d">PacketStory logo: a page of text lines over a packet waveform, next to the word PacketStory.</desc>
+  <defs>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fbb6d9"/>
+      <stop offset="0.5" stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#db2f86"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a1020"/>
+      <stop offset="1" stop-color="#0c1220"/>
+    </linearGradient>
+  </defs>
+  <rect width="880" height="240" rx="28" fill="url(#bg)"/>
+  <rect x="1.5" y="1.5" width="877" height="237" rx="26.5" fill="none" stroke="#f472b6" stroke-opacity="0.35" stroke-width="3"/>
+  <g transform="translate(40 40)">
+    <rect width="160" height="160" rx="36" fill="#1a0b14" stroke="#f472b6" stroke-width="4"/>
+    <g transform="translate(26 20) scale(.5)" fill="none" stroke="#fbb6d9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="20" y="10" width="190" height="230" rx="14"/>
+      <path d="M50 60h130M50 100h90M50 140h110"/>
+      <path d="M40 196c14-34 28-34 42 0s28 34 42 0 28-34 42 0 12 18 22 8"/>
+    </g>
+  </g>
+  <text x="238" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace"
+        font-size="82" font-weight="700" letter-spacing="1" fill="url(#word)">PacketStory</text>
+  <text x="242" y="188" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace"
+        font-size="26" fill="#c99fb4">$ read the capture like a page<tspan fill="#f472b6">_</tspan></text>
+</svg>

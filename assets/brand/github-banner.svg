@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+<title id="title">PacketStory — Packet captures, told as a story</title><desc id="desc">Turn a pcap into a readable timeline of what talked to what, with packet citations and notes on what is worth a look. By OBEOS.</desc>
+<defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".035"/></pattern></defs>
+<rect width="1200" height="400" rx="18" fill="#0c1220"/><rect width="1200" height="400" rx="18" fill="url(#grid)"/>
+<path d="M48 40h42" stroke="#f472b6" stroke-width="5"/>
+<text x="106" y="46" fill="#c5cddb" font-family="Arial, sans-serif" font-size="16" letter-spacing="3">BY OBEOS</text>
+<text x="48" y="114" fill="#f472b6" font-family="Arial, sans-serif" font-size="16" letter-spacing="3">ANALYSIS / 05</text>
+<text x="45" y="194" fill="#f3f5fa" font-family="Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="-2">PacketStory</text>
+<text x="48" y="247" fill="#e0e6ef" font-family="Arial, sans-serif" font-size="25">Packet captures, told as a story</text>
+<text x="48" y="285" fill="#99a7bc" font-family="Arial, sans-serif" font-size="21">Who talked to whom, when, and what is worth a look. Every line cites its packets.</text>
+<path d="M48 331h1104" stroke="#283345"/>
+<text x="48" y="366" fill="#99a7bc" font-family="Arial, sans-serif" font-size="15" letter-spacing="2">LOCAL SYSTEMS. CLEAR PURPOSE.</text>
+<text x="1106" y="366" fill="#f472b6" font-family="Arial, sans-serif" font-size="17" font-weight="700">5K</text>
+<g transform="translate(905 66)" fill="none" stroke="#f472b6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="10" width="190" height="230" rx="14"/><path d="M50 60h130M50 100h90M50 140h110"/><path d="M40 196c14-34 28-34 42 0s28 34 42 0 28-34 42 0 12 18 22 8"/><circle cx="82" cy="196" r="5" fill="#f472b6"/><circle cx="166" cy="196" r="5" fill="#f472b6"/></g>
+</svg>
