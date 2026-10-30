@@ -13,7 +13,7 @@ PacketStory is a pipeline with no state between runs. Each stage can only make t
 |---|---|
 | `capture.py` | Read pcap and pcapng into `RawPacket`s (number, time, link type, bytes). Bounds every length; warns instead of raising on a damaged tail. |
 | `decode.py` | Link, network and transport headers into one flat `Decoded` record. Never raises: a bad packet is returned with `malformed` or `unsupported` set. |
-| `appproto.py` | DNS, HTTP/1.x and TLS ClientHello readers. Return `None` unless sure. Keep only named fields; never a credential. |
+| `appproto.py` | DNS, HTTP/1.x and TLS ClientHello readers. Return `None` unless sure. Keep only named fields; never a credential value, query string or URL password. |
 | `flows.py` | Group packets into conversations keyed by protocol and the two endpoints; track TCP state; learn names from DNS answers. |
 | `story.py` | `Narrator` turns conversations into `Event`s: one plain sentence, the packet range it rests on, and whether it is notable. Heuristic thresholds are named constants. |
 | `render.py` | Markdown, HTML and JSON. Text from the capture is escaped. |

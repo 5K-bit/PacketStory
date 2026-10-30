@@ -193,3 +193,43 @@ def test_formatting_helpers() -> None:
         and size_text(2048) == "2.0 KiB"
         and size_text(3 * 1024**2) == "3.0 MiB"
     )
+
+
+def test_http_story_never_prints_the_query_string() -> None:
+    sim = lab.Sim(START)
+    sim.session(
+        "192.0.2.1", 1000, "192.0.2.2", 80,
+        [lab.http_request("GET", "h.test", "/reset?token=TEST_SECRET")], [lab.http_response(200)],
+    )  # fmt: skip
+    text = " ".join(e.text for e in events(sim.frames))
+    assert "TEST_SECRET" not in text and "/reset?…" in text
+
+
+def test_response_only_dns_does_not_invent_a_query() -> None:
+    frames = [
+        (START, lab.eth(lab.ipv4("192.0.2.53", "192.0.2.1", 17, lab.udp(
+            53, 4000, lab.dns_response(7, "x.example.test", ["203.0.113.9"]))))),
+    ]  # fmt: skip
+    (flow,) = analysis(frames).flows
+    assert flow.client == ("192.0.2.1", 4000) and flow.server == ("192.0.2.53", 53)
+    (event,) = events(frames)
+    assert "asked" not in event.text and "query was not captured" in event.text
+    assert event.text.startswith("192.0.2.53 sent 192.0.2.1 a DNS response")
+
+
+def test_tcp_close_wording_claims_only_what_was_seen() -> None:
+    sim = lab.Sim(START)
+    sim.session("192.0.2.1", 1000, "192.0.2.2", 80, [b"x"], [b"y"])
+    sim.tcp_pkt("192.0.2.1", 2000, "192.0.2.2", 80, lab.SYN, 1, 0)
+    sim.tcp_pkt("192.0.2.2", 80, "192.0.2.1", 2000, lab.SYN | lab.ACK, 5, 2)
+    sim.tcp_pkt("192.0.2.1", 2000, "192.0.2.2", 80, lab.ACK, 2, 6)
+    sim.tcp_pkt("192.0.2.1", 2000, "192.0.2.2", 80, lab.FIN | lab.ACK, 2, 6)
+    sim.session("192.0.2.1", 3000, "192.0.2.2", 81, [b"x"], [b"y"])
+    sim.tcp_pkt("192.0.2.1", 4000, "192.0.2.2", 82, lab.SYN, 1, 0)
+    sim.tcp_pkt("192.0.2.2", 82, "192.0.2.1", 4000, lab.SYN | lab.ACK, 5, 2)
+    sim.tcp_pkt("192.0.2.1", 4000, "192.0.2.2", 82, lab.ACK, 2, 6)
+    text = "\n".join(e.text for e in events(sim.frames))
+    assert "closed normally" not in text and "still open" not in text
+    assert "FIN observed from both sides" in text
+    assert "FIN observed from the client only" in text
+    assert "no closing packets observed" in text

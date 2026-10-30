@@ -6,6 +6,12 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- Reports no longer print HTTP query strings, fragments, `;param` segments or URL credentials; a dropped query shows as `?…`. The README no longer claims a report can never contain sensitive data, and says paths and names are printed as seen.
+- A DNS response with no captured query is now described as a response from the server ("the query was not captured") instead of the server having "asked" the client. Roles come from message direction.
+- TCP endings now say only what was seen: "FIN observed from both sides", "FIN observed from the client only" or "no closing packets observed", instead of "closed normally" and "still open".
+
 ## [0.1.0] - 2026-10-29
 
 First working version.

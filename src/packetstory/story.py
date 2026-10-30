@@ -89,7 +89,8 @@ class Narrator:
         elif flow.http:
             req = flow.http[0]
             status = f" → {flow.http_status[0]}" if flow.http_status else ""
-            detail = f", {req.method} {req.host}{req.path}{status}"
+            cut = "?…" if req.query_omitted else ""
+            detail = f", {req.method} {req.host}{req.path}{cut}{status}"
         if flow.midstream:
             lead = f"{who} and {where} port {port}: the capture began mid-connection{detail}"
         elif flow.established:
@@ -98,8 +99,8 @@ class Narrator:
             lead = f"{who} started a connection to {where} port {port} that never completed"
         end = (
             f"reset by the {flow.rst_by}" if flow.rst_by
-            else "closed normally" if flow.fin
-            else "still open when the capture ended"
+            else _fin_text(flow) if flow.fin
+            else "no closing packets observed"
         )  # fmt: skip
         text = (
             f"{lead}; {size_text(flow.bytes_out)} sent, {size_text(flow.bytes_in)} received over "
@@ -233,7 +234,8 @@ class Narrator:
                 if not msg.is_response:
                     pending[msg.ident] = (number, ts, msg)
                     continue
-                q_pkt, q_ts, _ = pending.pop(msg.ident, (number, ts, msg))
+                matched = pending.pop(msg.ident, None)
+                q_pkt, q_ts, _ = matched or (number, ts, msg)
                 name, qtype = msg.questions[0] if msg.questions else ("?", "?")
                 if msg.rcode == "NOERROR":
                     result = "got " + (
@@ -244,7 +246,13 @@ class Narrator:
                     failures.setdefault(flow.client[0], {})[name] = (q_pkt, number)
                 else:
                     result = f"got {msg.rcode}"
-                text = f"{who} asked {resolver} for {name} ({qtype}) and {result}."
+                if matched:
+                    text = f"{who} asked {resolver} for {name} ({qtype}) and {result}."
+                else:
+                    text = (
+                        f"{resolver} sent {who} a DNS response for {name} ({qtype}) "
+                        f"with {result.removeprefix('got ')}; the query was not captured."
+                    )
                 events.append(Event(q_ts, q_pkt, number, "dns", text))
             for number, ts, msg in pending.values():
                 name, qtype = msg.questions[0] if msg.questions else ("?", "?")
@@ -267,6 +275,12 @@ class Narrator:
                 )
             )  # fmt: skip
         return events
+
+
+def _fin_text(flow: Flow) -> str:
+    if flow.fin_client and flow.fin_server:
+        return "FIN observed from both sides"
+    return f"FIN observed from the {'client' if flow.fin_client else 'server'} only"
 
 
 def _nm(port: int) -> str:

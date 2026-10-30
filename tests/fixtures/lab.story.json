@@ -32,7 +32,7 @@
       "kind": "tcp",
       "last_packet": 13,
       "notable": false,
-      "text": "192.0.2.10 connected to example.test (203.0.113.7) port 443/tcp (https), TLS to example.test; 376 B sent, 5.1 KiB received over 8 ms; closed normally.",
+      "text": "192.0.2.10 connected to example.test (203.0.113.7) port 443/tcp (https), TLS to example.test; 376 B sent, 5.1 KiB received over 8 ms; FIN observed from both sides.",
       "ts": "2026-10-29T17:00:00.522Z"
     },
     {
@@ -56,7 +56,7 @@
       "kind": "tcp",
       "last_packet": 22,
       "notable": false,
-      "text": "192.0.2.10 connected to api.example.test (203.0.113.20) port 80/tcp (http), GET api.example.test/v1/status \u2192 200; 114 B sent, 54 B received over 6 ms; closed normally.",
+      "text": "192.0.2.10 connected to api.example.test (203.0.113.20) port 80/tcp (http), GET api.example.test/v1/status \u2192 200; 114 B sent, 54 B received over 6 ms; FIN observed from both sides.",
       "ts": "2026-10-29T17:00:01.552Z"
     },
     {

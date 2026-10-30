@@ -32,10 +32,10 @@ $ packetstory story examples/lab/lab.pcap --max-events 40
 
 - `2026-10-29T17:00:00.000Z` [pkt 1–2] 192.0.2.10 pinged 192.0.2.1: 1 request(s), 1 reply(ies).
 - `2026-10-29T17:00:00.501Z` [pkt 3–4] 192.0.2.10 asked 192.0.2.53 for example.test (A) and got 203.0.113.7.
-- `2026-10-29T17:00:00.522Z` [pkt 5–13] 192.0.2.10 connected to example.test (203.0.113.7) port 443/tcp (https), TLS to example.test; 376 B sent, 5.1 KiB received over 8 ms; closed normally.
+- `2026-10-29T17:00:00.522Z` [pkt 5–13] 192.0.2.10 connected to example.test (203.0.113.7) port 443/tcp (https), TLS to example.test; 376 B sent, 5.1 KiB received over 8 ms; FIN observed from both sides.
 - `2026-10-29T17:00:01.531Z` [pkt 14–15] 192.0.2.10 asked 192.0.2.53 for api.example.test (A) and got 203.0.113.20.
 - `2026-10-29T17:00:01.552Z` [pkt 16–22] 192.0.2.10 sent an HTTP request to api.example.test with an Authorization header (Basic) over an unencrypted connection. The value is not shown here.
-- `2026-10-29T17:00:01.552Z` [pkt 16–22] 192.0.2.10 connected to api.example.test (203.0.113.20) port 80/tcp (http), GET api.example.test/v1/status → 200; 114 B sent, 54 B received over 6 ms; closed normally.
+- `2026-10-29T17:00:01.552Z` [pkt 16–22] 192.0.2.10 connected to api.example.test (203.0.113.20) port 80/tcp (http), GET api.example.test/v1/status → 200; 114 B sent, 54 B received over 6 ms; FIN observed from both sides.
 - `2026-10-29T17:00:03.559Z` [pkt 23–24] 192.0.2.10 asked 192.0.2.53 for xk3f9a.invalid (A) and got NXDOMAIN (no such name).
 - `2026-10-29T17:00:03.559Z` [pkt 23–34] 192.0.2.10 had 6 different names fail to resolve (for example b2k8yy.invalid, m7d4tt.invalid, q8w2pz.invalid). Misconfiguration and malware both cause this; the capture alone cannot say which.
 - `2026-10-29T17:00:03.580Z` [pkt 25–26] 192.0.2.10 asked 192.0.2.53 for q8w2pz.invalid (A) and got NXDOMAIN (no such name).

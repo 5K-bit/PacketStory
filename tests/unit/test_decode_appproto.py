@@ -133,7 +133,8 @@ def test_http_request_never_keeps_the_credential() -> None:
     m = parse_http(
         lab.http_request("GET", "h.test", "/p?q=1", "Authorization: Bearer SECRETTOKEN\r\n")
     )
-    assert m and m.is_request and m.method == "GET" and m.host == "h.test" and m.path == "/p?q=1"
+    assert m and m.is_request and m.method == "GET" and m.host == "h.test"
+    assert m.path == "/p" and m.query_omitted
     assert m.auth_scheme == "Bearer" and "SECRETTOKEN" not in repr(m)
     r = parse_http(lab.http_response(404))
     assert r and not r.is_request and r.status == 404
@@ -146,3 +147,19 @@ def test_tls_sni() -> None:
     for cut in range(0, len(hello), 7):
         assert parse_tls_sni(hello[:cut]) in (None, "x.test")  # never raises on a truncated hello
     assert parse_tls_sni(b"\x17\x03\x03" + bytes(80)) is None
+
+
+def test_http_target_drops_query_fragment_params_and_url_credentials() -> None:
+    def parse(path: str):  # type: ignore[no-untyped-def]
+        return parse_http(lab.http_request("GET", "h.test", path))
+
+    m = parse("/reset?token=TEST_SECRET#frag")
+    assert m and m.path == "/reset" and m.query_omitted and "TEST_SECRET" not in repr(m)
+    m = parse("/a;jsessionid=TEST_SECRET/b")
+    assert m and m.path == "/a/b" and m.query_omitted and "TEST_SECRET" not in repr(m)
+    m = parse("http://user:TEST_SECRET@proxy.test:8080/x?k=TEST_SECRET")
+    assert m and m.path == "/x" and m.host == "h.test" and "TEST_SECRET" not in repr(m)
+    raw = b"GET http://user:TEST_SECRET@proxy.test/x HTTP/1.1\r\n\r\n"
+    m = parse_http(raw)
+    assert m and m.host == "proxy.test" and m.path == "/x" and "TEST_SECRET" not in repr(m)
+    assert parse("/plain") and not parse("/plain").query_omitted  # type: ignore[union-attr]

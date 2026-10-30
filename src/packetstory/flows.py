@@ -31,6 +31,8 @@ class Flow:
     synack: bool = False
     established: bool = False
     fin: bool = False
+    fin_client: bool = False
+    fin_server: bool = False
     rst_by: str = ""  # "client" or "server"
     sni: str = ""
     http: list[HttpMessage] = field(default_factory=list)
@@ -119,7 +121,7 @@ def _add(pkt: Decoded, flows: list[Flow], live: dict[FlowKey, Flow], names: dict
         src: Endpoint = (pkt.src, pkt.sport if pkt.proto in ("tcp", "udp") else 0)
         dst: Endpoint = (pkt.dst, pkt.dport if pkt.proto in ("tcp", "udp") else 0)
         synack = pkt.proto == "tcp" and pkt.flags & TCP_SYN and pkt.flags & TCP_ACK
-        client, server = (dst, src) if synack else (src, dst)
+        client, server = (dst, src) if synack or _dns_response_first(pkt) else (src, dst)
         midstream = pkt.proto == "tcp" and not (plain_syn or synack)
         flow = Flow(len(flows) + 1, pkt.proto, client, server, pkt.ts_ns, pkt.ts_ns, pkt.number,
                     pkt.number, midstream=midstream)  # fmt: skip
@@ -152,6 +154,14 @@ def _add(pkt: Decoded, flows: list[Flow], live: dict[FlowKey, Flow], names: dict
         flow.icmp_types[pkt.icmp_type] = flow.icmp_types.get(pkt.icmp_type, 0) + 1
 
 
+def _dns_response_first(pkt: Decoded) -> bool:
+    """True when a UDP packet is a DNS response, so its sender is the server, not the client."""
+    if pkt.proto != "udp" or 53 not in (pkt.sport, pkt.dport) or not pkt.payload:
+        return False
+    msg = parse_dns(pkt.payload)
+    return msg is not None and msg.is_response
+
+
 def _tcp_state(flow: Flow, pkt: Decoded, from_client: bool) -> None:
     f = pkt.flags
     if f & TCP_SYN and not f & TCP_ACK and from_client:
@@ -164,6 +174,10 @@ def _tcp_state(flow: Flow, pkt: Decoded, from_client: bool) -> None:
         flow.established = True
     if f & TCP_FIN:
         flow.fin = True
+        if from_client:
+            flow.fin_client = True
+        else:
+            flow.fin_server = True
     if f & TCP_RST and not flow.rst_by:
         flow.rst_by = "client" if from_client else "server"
 

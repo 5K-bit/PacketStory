@@ -1,7 +1,8 @@
 """Small, defensive parsers for DNS, plain HTTP/1.x and the TLS ClientHello's server name.
 
 Each parser returns ``None`` for anything it cannot read with confidence. None of them
-keeps payload beyond the few fields named below, and none keeps a credential's value.
+keeps payload beyond the few fields named below. None keeps a credential's value, a query
+string or a URL password.
 """
 
 from __future__ import annotations
@@ -117,9 +118,34 @@ class HttpMessage:
     host: str = ""
     auth_scheme: str = ""  # "Basic", "Bearer", ... — never the credential itself
     user_agent: str = ""
+    query_omitted: bool = False  # the request target had a query string or fragment; not kept
 
 
 _METHODS = (b"GET ", b"POST ", b"PUT ", b"DELETE ", b"HEAD ", b"OPTIONS ", b"PATCH ")
+
+
+def _safe_target(target: str) -> tuple[str, str, bool]:
+    """Split a request target into (authority host, path, query_omitted).
+
+    Query strings and fragments are dropped because they often carry tokens. For an
+    absolute-form target (``http://user:pw@host/p``) the scheme and any ``user:pw@`` are dropped
+    too. The path itself is kept and can still be sensitive; the docs say so.
+    """
+    authority = ""
+    if target.lower().startswith(("http://", "https://")):
+        rest = target.split("://", 1)[1]
+        end = min((i for i in (rest.find(c) for c in "/?#") if i >= 0), default=len(rest))
+        authority, target = rest[:end], rest[end:] or "/"
+        authority = authority.rsplit("@", 1)[-1]
+    cut = min((i for i in (target.find(c) for c in "?#") if i >= 0), default=-1)
+    omitted = cut >= 0
+    if omitted:
+        target = target[:cut]
+    # Path parameters such as ``;jsessionid=...`` are session tokens by convention.
+    if ";" in target:
+        target = "/".join(seg.split(";", 1)[0] for seg in target.split("/"))
+        omitted = True
+    return authority, target or "/", omitted
 
 
 def parse_http(payload: bytes) -> HttpMessage | None:
@@ -130,7 +156,8 @@ def parse_http(payload: bytes) -> HttpMessage | None:
     if not first.startswith(_METHODS) or b" HTTP/1." not in first:
         return None
     method, _, tail = first.partition(b" ")
-    path = tail.rsplit(b" HTTP/", 1)[0]
+    target = tail.rsplit(b" HTTP/", 1)[0].decode("ascii", "replace")
+    url_host, path, query_omitted = _safe_target(target)
     host = scheme = agent = ""
     for line in rest.split(b"\r\n"):
         if not line:
@@ -144,8 +171,9 @@ def parse_http(payload: bytes) -> HttpMessage | None:
         elif key == b"user-agent":
             agent = value.strip().decode("ascii", "replace")[:120]
     return HttpMessage(
-        True, method=method.decode("ascii", "replace"), path=path.decode("ascii", "replace")[:200],
-        host=host, auth_scheme=scheme, user_agent=agent,
+        True, method=method.decode("ascii", "replace"), path=path[:200],
+        host=(host or url_host).rsplit("@", 1)[-1][:255], auth_scheme=scheme, user_agent=agent,
+        query_omitted=query_omitted,
     )  # fmt: skip
 
 
