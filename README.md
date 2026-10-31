@@ -123,7 +123,7 @@ PacketStory does not claim more than it has shown:
 ## Roadmap
 
 - [x] pcap and pcapng reading, conversations, narrated timeline with citations, three notes, Markdown, HTML and JSON
-- [ ] Run on GitHub CI (Linux and Windows) and confirm the matrix is green
+- [x] Run on GitHub CI (Linux and Windows): the matrix is green on `main` (checked 2026-10-31)
 - [ ] TCP stream reassembly for HTTP and TLS split across segments
 - [ ] More readers: QUIC and HTTP/2 metadata, SMB, DHCP
 - [ ] Export a Casefile-ready evidence bundle (optional OBEOS integration)
